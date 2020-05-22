@@ -8,7 +8,6 @@ track::~track() {
 
 void track::bindscore(score * x) { sb = x; }
 void track::setarea(rect rt) { area = rt; }
-rect track::getarea() { return area; }
 
 rect track::getpos(note * nt, clock_t now) {
 	double mid = (nt->tick - now) / 1000000.;
@@ -45,10 +44,7 @@ void track::push(note x) {
 
 void track::reset() {
 	cur = 0;
-	light = false;
 }
-void track::setlight(bool x) { light = x; }
-bool track::islight() { return light; }
 
 bool track::checkhit(clock_t now) {
 	if (cur == notes.size()) return false;
@@ -60,7 +56,6 @@ bool track::checkhit(clock_t now) {
 	if (res != TAG_BAD) sb->pushdelta(delta);
 	return true;
 }
-
 bool track::checkmiss(clock_t now) {
 	if (cur == notes.size()) return false;
 	int res = (now - checkdelta) - notes[cur].tick;
@@ -78,10 +73,12 @@ int track::match(int dta) {
 	if (std::abs(dta) <= bad) return TAG_BAD;
 	return TAG_MISS;
 }
+coord track::getstatus() {
+	return coord(area.p2.x + 2, area.p1.y + 1);
+}
 rect track::getdown() {
 	coord p1(area.p2.x + 1, area.p1.y);
 	coord p2(area.p2.x + 1, area.p2.y);
 	return rect(p1, p2);
 }
 void track::setdelta(int x) { checkdelta = x; }
-int track::getwidth() { return area.p2.y - area.p1.y + 1; }

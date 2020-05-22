@@ -8,6 +8,7 @@ void score::reset() {
 	perfect = great = good = bad = 0;
 	maxcombo = click = combo = totscore = 0;
 	deltas = 0;
+	lststatus = 0;
 	lstdelta = 0;
 }
 double score::getacc() {

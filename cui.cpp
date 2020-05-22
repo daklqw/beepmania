@@ -9,13 +9,14 @@ UI::UI() {
 	FPSset = false;
 	init_pair(1, COLOR_BLACK, COLOR_RED);
 	init_pair(2, COLOR_BLACK, COLOR_BLUE);
-	init_pair(3, COLOR_WHITE, COLOR_BLACK);
-	init_pair(4, COLOR_WHITE, COLOR_MAGENTA);
 }
 UI::~UI() { endwin(); }
 void UI::bindtimer(timer * _t) { ti = _t; }
 void UI::bindscore(score * _t) { sb = _t; }
 void UI::setFPS(coord _t) { fpsat = _t; FPSset = true; }
+void UI::setStatusPos(coord _t) { statat = _t; }
+void UI::setWordPos(coord _t) { wordat = _t, wordDisplay = true;  }
+void UI::setWordDisplay(bool is_display = true) { wordDisplay = is_display; }
 void matrix(rect box, char ch) {
 	for (int x = box.p1.x; x <= box.p2.x; ++x)
 		for (int y = box.p1.y; y <= box.p2.y; ++y)
@@ -24,25 +25,23 @@ void matrix(rect box, char ch) {
 void UI::update(clock_t now) {
 	clear();
 	for (auto tr : trs) {
-		int fg = tr->getdisplaych();
-		int bg = 3 + tr->islight();
-		attron(COLOR_PAIR(bg));
-		matrix(tr->getarea(), ' ');
-		attroff(COLOR_PAIR(bg));
 		for (auto box : tr->gettrack(now)) {
-			attron(COLOR_PAIR(fg));
+			int v = tr->getdisplaych();
+			attron(COLOR_PAIR(v));
 			matrix(box, ' ');
-			attroff(COLOR_PAIR(fg));
+			attroff(COLOR_PAIR(v));
 		}
-		attron(COLOR_PAIR(bg));
 		matrix(tr->getdown(), '=');
-		attroff(COLOR_PAIR(bg));
 	}
 }
 double UI::getFPS() { return flevent.size(); }
 void UI::showFPS() {
 	move(fpsat.x, fpsat.y);
 	printw("FPS: %.1lf", getFPS());
+}
+void UI::showWord() {
+	move(wordat.x, wordat.y);
+	// printw("%s\n", word.c_str());
 }
 void UI::setscore(coord t) { sbat = t; }
 void UI::showscore() {
@@ -67,6 +66,8 @@ void UI::showscore() {
 	printw("hitavg : %.0lf(%c)", tmp, (tmp >= 0 ? 'e' : 'l'));
 	move(fpsat.x + 10, fpsat.y);
 	printw("lstdta : %d", sb->lstdelta);
+	move(statat.x, statat.y);
+	printw("%5d %s", sb->combo, statusName.at(sb->lststatus));
 }
 void UI::flush() {
 	while (!flevent.empty() && ti->interval(flevent.front()) > 1.0)

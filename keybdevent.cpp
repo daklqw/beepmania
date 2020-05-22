@@ -7,10 +7,8 @@ int keybd::getNextKey(){
 	while (true) {
 		int res = read(dev, &ie, siz);
 		if (res == -1) return 0;
-		if (ie.type == 1) {
-			if (ie.value <= 1) {
-				return ie.value ? (int) ie.code : -((int) ie.code);
-			}
+		if (ie.type == 1 && ie.value == 1) {
+			return ie.code;
 		}
 	}
 	return -1;
