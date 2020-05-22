@@ -11,7 +11,7 @@ all:$(BINOUT)
 
 $(BINOUT): $(OBJS) $(COMMONOBJS)
 	    $(GCC) $(CFLAGS) -o $@ $^ $(addprefix -l,$(LIBS)) 
-%.o:%.cpp
+%.o:%.cpp %.hpp
 	    $(GCC) $(CFLAGS) -c $< -o $@
 clean :  
 	    rm -rf $(COMMONOBJS) $(OBJS) $(BINOUT)
