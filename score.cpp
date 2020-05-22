@@ -31,7 +31,7 @@ void score::push(int x) {
 			break;
 		default: break;
 	}
-	++click;
+	++click, lststatus = x;
 	maxcombo = std::max(maxcombo, combo);
 }
 void score::pushdelta(int x) {

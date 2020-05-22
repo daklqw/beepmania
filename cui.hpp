@@ -13,6 +13,7 @@ class UI {
 		void bindtimer(timer *);
 		void bindscore(score *);
 		void setFPS(coord);
+		void setStatusPos(coord);
 		void update(clock_t);
 		double getFPS();
 		void showFPS();
@@ -25,7 +26,7 @@ class UI {
 		std::vector<track*> trs;
 		timer * ti;
 		std::queue<int> flevent;
-		coord fpsat, sbat;
+		coord fpsat, sbat, statat;
 		bool FPSset;
 		score * sb;
 } ;

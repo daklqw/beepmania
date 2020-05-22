@@ -15,8 +15,6 @@ void UI::bindtimer(timer * _t) { ti = _t; }
 void UI::bindscore(score * _t) { sb = _t; }
 void UI::setFPS(coord _t) { fpsat = _t; FPSset = true; }
 void UI::setStatusPos(coord _t) { statat = _t; }
-void UI::setWordPos(coord _t) { wordat = _t, wordDisplay = true;  }
-void UI::setWordDisplay(bool is_display = true) { wordDisplay = is_display; }
 void matrix(rect box, char ch) {
 	for (int x = box.p1.x; x <= box.p2.x; ++x)
 		for (int y = box.p1.y; y <= box.p2.y; ++y)
@@ -38,10 +36,6 @@ double UI::getFPS() { return flevent.size(); }
 void UI::showFPS() {
 	move(fpsat.x, fpsat.y);
 	printw("FPS: %.1lf", getFPS());
-}
-void UI::showWord() {
-	move(wordat.x, wordat.y);
-	// printw("%s\n", word.c_str());
 }
 void UI::setscore(coord t) { sbat = t; }
 void UI::showscore() {

@@ -14,6 +14,7 @@ class track {
 		void bindscore(score * x);
 		std::vector<rect> gettrack(clock_t);
 		rect getdown();
+		coord getstatus();
 		char getdisplaych();
 		void setdisplaych(char);
 

@@ -8,6 +8,16 @@
 
 #include "utils.hpp"
 
+const std::map<int, const char *> statusName = {
+	{-1, "MISS"},
+	{0, ""},
+	{1, "PERFECT"},
+	{2, "GREAT"},
+	{3, "GOOD"},
+	{4, "BAD"},
+};	
+
+
 class score {
 	public:
 		score();
@@ -21,7 +31,7 @@ class score {
 		int combo;
 		long long totscore;
 		int maxcombo;
-		int lstdelta;
+		int lstdelta, lststatus;
 	private:
 		int click;
 		double deltas;
