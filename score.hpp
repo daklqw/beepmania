@@ -15,7 +15,7 @@ const std::map<int, const char *> statusName = {
 	{2, "GREAT"},
 	{3, "GOOD"},
 	{4, "BAD"},
-};	
+};
 
 
 class score {

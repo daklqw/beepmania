@@ -9,6 +9,8 @@ UI::UI() {
 	FPSset = false;
 	init_pair(1, COLOR_BLACK, COLOR_RED);
 	init_pair(2, COLOR_BLACK, COLOR_BLUE);
+	init_pair(3, COLOR_WHITE, COLOR_BLACK);
+	init_pair(4, COLOR_WHITE, COLOR_MAGENTA);
 }
 UI::~UI() { endwin(); }
 void UI::bindtimer(timer * _t) { ti = _t; }
@@ -23,13 +25,19 @@ void matrix(rect box, char ch) {
 void UI::update(clock_t now) {
 	clear();
 	for (auto tr : trs) {
+		int fg = tr->getdisplaych();
+		int bg = 3 + tr->islight();
+		attron(COLOR_PAIR(bg));
+		matrix(tr->getarea(), ' ');
+		attroff(COLOR_PAIR(bg));
 		for (auto box : tr->gettrack(now)) {
-			int v = tr->getdisplaych();
-			attron(COLOR_PAIR(v));
+			attron(COLOR_PAIR(fg));
 			matrix(box, ' ');
-			attroff(COLOR_PAIR(v));
+			attroff(COLOR_PAIR(fg));
 		}
+		attron(COLOR_PAIR(bg));
 		matrix(tr->getdown(), '=');
+		attroff(COLOR_PAIR(bg));
 	}
 }
 double UI::getFPS() { return flevent.size(); }

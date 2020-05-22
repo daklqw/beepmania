@@ -81,19 +81,25 @@ void gamecore::configtrack(FILE * fin) {
 void gamecore::configui() {
 	ui.bindtimer(&ti);
 	ui.bindscore(&sb);
-	ui.setFPS(coord(1, 30));
-	ui.setStatusPos(tv[0].getstatus());
+	ui.setFPS(coord(1, tv.size() * tv[0].getwidth() + 1));
+	ui.setStatusPos(coord(tv[0].getdown().p2.x + 1, 3));
 	for (int i = 0; i != tv.size(); ++i)
 		ui.pushtrack(&tv[i]);
 }
 
 void gamecore::getclick(int ch) {
+	bool light = true;
+	if (ch < 0) light = false, ch = -ch;
 	if (binder.count(ch)) {
 		track & tar = tv[binder[ch]];
-		int cur = ti.current();
-		tar.checkhit(cur);
+		if (light) {
+			int cur = ti.current();
+			tar.checkhit(cur);
+		}
+		tar.setlight(light);
 	}
 }
+
 void gamecore::start() {
 	configtimer();
 	int lst = ti.current();
