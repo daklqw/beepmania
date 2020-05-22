@@ -22,13 +22,17 @@ void matrix(rect box, char ch) {
 		for (int y = box.p1.y; y <= box.p2.y; ++y)
 			mvaddch(x, y, ch);
 }
+rect halfdown(rect x) {
+	x.p1.x = x.p1.x + x.p2.x + 1 >> 1;
+	return x;
+}
 void UI::update(clock_t now) {
 	clear();
 	for (auto tr : trs) {
 		int fg = tr->getdisplaych();
 		int bg = 3 + tr->islight();
 		attron(COLOR_PAIR(bg));
-		matrix(tr->getarea(), ' ');
+		matrix(halfdown(tr->getarea()), ' ');
 		attroff(COLOR_PAIR(bg));
 		for (auto box : tr->gettrack(now)) {
 			attron(COLOR_PAIR(fg));
