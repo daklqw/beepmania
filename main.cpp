@@ -18,7 +18,6 @@ int main(int argc, char ** argv) {
 		std::cerr << "Open keyboard event error" << std::endl;
 		return -1;
 	}
-	std::cerr << "Open beep device " << beep << std::endl;
 	if (gm.configsound(beep) < 0) {
 		std::cerr << "Open beep device error" << std::endl;
 		return -1;
