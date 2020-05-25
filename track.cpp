@@ -23,7 +23,7 @@ rect track::getpos(note * nt, clock_t now) {
 std::vector<rect> track::gettrack(clock_t now) {
 	int _c = cur;
 	std::vector<rect> res;
-	while (_c < notes.size()) {
+	while (_c < (int)notes.size()) {
 		if (notes[_c].tick - now > spn * CLOCKS_PER_SEC) break;
 		rect tmp = getpos(&notes[_c++], now);
 		if (tmp.none()) continue;
@@ -51,7 +51,7 @@ void track::setlight(bool x) { light = x; }
 bool track::islight() { return light; }
 
 bool track::checkhit(clock_t now) {
-	if (cur == notes.size()) return false;
+	if (cur == (int)notes.size()) return false;
 	int delta = notes[cur].tick - (now - checkdelta);
 	int res = match(delta);
 	if (res == -1) return false;
@@ -62,7 +62,7 @@ bool track::checkhit(clock_t now) {
 }
 
 bool track::checkmiss(clock_t now) {
-	if (cur == notes.size()) return false;
+	if (cur == (int)notes.size()) return false;
 	int res = (now - checkdelta) - notes[cur].tick;
 	if (res > bad) {
 		++cur;
@@ -85,3 +85,6 @@ rect track::getdown() {
 }
 void track::setdelta(int x) { checkdelta = x; }
 int track::getwidth() { return area.p2.y - area.p1.y + 1; }
+
+int track::getlightheight() { return lightheight; }
+void track::setlightheight(int x) { lightheight = x; }

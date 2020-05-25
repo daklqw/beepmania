@@ -22,8 +22,8 @@ void matrix(rect box, char ch) {
 		for (int y = box.p1.y; y <= box.p2.y; ++y)
 			mvaddch(x, y, ch);
 }
-rect halfdown(rect x) {
-	x.p1.x = x.p1.x + x.p2.x + 1 >> 1;
+rect halfdown(track *tr, rect x) {
+	x.p1.x = x.p2.x - tr->getlightheight() + 1;
 	return x;
 }
 void UI::update(clock_t now) {
@@ -32,7 +32,7 @@ void UI::update(clock_t now) {
 		int fg = tr->getdisplaych();
 		int bg = 3 + tr->islight();
 		attron(COLOR_PAIR(bg));
-		matrix(halfdown(tr->getarea()), ' ');
+		matrix(halfdown(tr, tr->getarea()), ' ');
 		attroff(COLOR_PAIR(bg));
 		for (auto box : tr->gettrack(now)) {
 			attron(COLOR_PAIR(fg));
