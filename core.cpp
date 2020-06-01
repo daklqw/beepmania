@@ -61,8 +61,8 @@ void gamecore::configtrack(FILE * fin) {
 	int tc;
 	fscanf(fin, "%d %d", &fpslimit, &tc);
 	double spn;
-	int C, R, dta;
-	fscanf(fin, "%lf%d%d%d", &spn, &C, &R, &dta);
+	int C, L, R, dta;
+	fscanf(fin, "%lf%d%d%d%d", &spn, &C, &L, &R, &dta);
 	tv.clear();
 	for (int i = 0; i < tc; ++i) {
 		int A, B;
@@ -76,6 +76,7 @@ void gamecore::configtrack(FILE * fin) {
 		tv[i].setrange(35000, 80000, 150000, 200000);
 		tv[i].setarea(rect(coord(1, R * i + 1), coord(C, R * i + R)));
 		tv[i].setdelta(dta);
+		tv[i].setlightheight(L);
 	}
 }
 void gamecore::configui() {
@@ -83,7 +84,7 @@ void gamecore::configui() {
 	ui.bindscore(&sb);
 	ui.setFPS(coord(1, tv.size() * tv[0].getwidth() + 1));
 	ui.setStatusPos(coord(tv[0].getdown().p2.x + 1, 3));
-	for (int i = 0; i != tv.size(); ++i)
+	for (int i = 0; i != (int)tv.size(); ++i)
 		ui.pushtrack(&tv[i]);
 }
 

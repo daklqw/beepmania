@@ -12,14 +12,14 @@ const char ch[] = "ZXCVBNMASDFGHJQWERTYU1234567";
 keytrans::keytrans() {
 	memset(voicec, 0, sizeof voicec);
 	const int sz = strlen(ch);
-	for (int i = 0; i < sz; ++i) voicec[ch[i]] = voice[i];
+	for (int i = 0; i < sz; ++i) voicec[(int)ch[i]] = voice[i];
 }
 
 keytrans::~keytrans() {
 }
 
 double keytrans::operator ()(char ch, double pw) {
-	return voicec[ch] * pow(vol, pw) * delta;
+	return voicec[(int)ch] * pow(vol, pw) * delta;
 }
 
 void keytrans::set(double pw) {

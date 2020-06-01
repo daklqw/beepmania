@@ -32,8 +32,11 @@ class track {
 		int getwidth();
 		bool islight();
 		void setlight(bool);
+		int getlightheight();
+		void setlightheight(int);
 	private:
 		bool light;
+		int lightheight;
 		rect getpos(note*, clock_t);
 		double spn; // seconds per note
 		int perfect, great, good, bad;
